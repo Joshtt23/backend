@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  backend:
+    image: backend
+    restart: unless-stopped
+    environment:
+      - TOKEN=MTAxMDk4MTU1MjU4ODU4NzE4OQ.G6BxNI.JoiEmG1RHMAUqQJyDNks6WSitKGkGu6s9dr84Q
+      - DEFAULT_GUILD_ID=899757430211223642
+      - BEARER_TOKEN=AAAAAAAAAAAAAAAAAAAAAO6qfQEAAAAA29inxBujmCbodtjztEOPLIPdPWs%3DQVHwEKdPEluKHBqyVM4fWwjaJNZgnx3gXajpapZFFrnFQGXa8H
+      - TWITTER_API_KEY=FQlXmRh4i1uxP5RXYitMSjS8A
+      - TWITTER_API_KEY_SECRET=nhNzXU27zJeb3YoP02oUoMrJqgxKZsK7p4mDPEy4ReFBzce7XL
+      - ACCESS_TOKEN=1484231022619377666-hcdKQE5d0EjFiMtVzyck73nGFZpqjz
+      - ACCESS_TOKEN_SECRET=nIKp8uHmxUEh6GAxZtRgfsI3f4kswgLU29FdfSxojBig1
+      - CLIENT_ID=SnlqVHNqeVBHU0ltd1ZsQ3ItRFI6MTpjaQ
+      - CLIENT_SECRET=0ixdXvEA_2KsqA1XXytekkzCXXpR2ZvpxXHBZo65F0B_BtOu53
+    build:
+      context: .
+      dockerfile: ./Dockerfile

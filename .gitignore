@@ -1,0 +1,11 @@
+.vscode/*
+tf_backend/__pycache__/*
+LEARNING.txt
+.env
+test.json
+env/*
+tf_backend/discord_bot/__pycache__/*
+tf_backend/discord_bot/wallets
+tf_backend/discord_bot/extensions/__pycache__/*
+Signalar LEARNING.txt
+venv

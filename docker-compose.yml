@@ -16,4 +16,20 @@ services:
       - CLIENT_SECRET=0ixdXvEA_2KsqA1XXytekkzCXXpR2ZvpxXHBZo65F0B_BtOu53
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./tf_backend/Dockerfile
+    ports:
+      - "8888:8888"
+  database:
+    image : mongo
+    container_name: 'Holder-DB'
+    environment:
+      - MONGO_INITDB_DATABASE=Holder
+      - MONGO_INITDB_ROOT_USERNAME=Joshtt23
+      - MONGO_INITDB_ROOT_PASSWORD=Tyler03061998?!
+    restart: unless-stopped
+    volumes:
+    - /mongodb/database:/data/db
+    - /mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+  
+    ports:
+    - '27017-27019:27017-27019'

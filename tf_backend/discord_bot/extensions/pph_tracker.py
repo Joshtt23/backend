@@ -12,29 +12,30 @@ async def Paper_Tracker():
         allRlCol= await urlRlCol.json()
         prevChecked = []
         for recentListing in allRlCol:
-            if not recentListing["key"] in prevChecked:
-                async with aiohttp.ClientSession() as session2:
-                    url2 = "https://api.coralcube.io/v1/getItems?offset=0&page_size=1&ranking=price_asc&symbol=" + str(recentListing["collection_symbol"])
-                    urlColInfo = await session2.get(url2, headers=headers, ssl=False)
-                    colData =await urlColInfo.json()
-                    prevChecked.append(recentListing["key"])
-                    try:
-                        colInfo=colData['collection']
-                    except:
-                        print("Collection not Found")
-                    else:
+            if recentListing['type'] == "listing":
+                if not recentListing["key"] in prevChecked:
+                    async with aiohttp.ClientSession() as session2:
+                        url2 = "https://api.coralcube.io/v1/getItems?offset=0&page_size=1&ranking=price_asc&symbol=" + str(recentListing["collection_symbol"])
+                        urlColInfo = await session2.get(url2, headers=headers, ssl=False)
+                        colData =await urlColInfo.json()
+                        prevChecked.append(recentListing["key"])
                         try:
-                            floorPrice = colInfo["floor_price"]
-                            floorPrice=floorPrice/1000000000
-                            mut = colData['items']
-                            mut2 = mut[0]
-                            royalties = mut2['royalty']/1000000000
-
+                            colInfo=colData['collection']
                         except:
-                            print("Collection Error")
+                            print("Collection not Found")
                         else:
-                            phFp = floorPrice-((floorPrice*.02)-royalties)
-                            rlPrice = recentListing["price"]/1000000000
-                            if rlPrice <= phFp:
-                                yield recentListing
-                print("Checking...")
+                            try:
+                                floorPrice = colInfo["floor_price"]
+                                floorPrice=floorPrice/1000000000
+                                mut = colData['items']
+                                mut2 = mut[0]
+                                royalties = mut2['royalty']/1000000000
+
+                            except:
+                                print("Collection Error")
+                            else:
+                                phFp = floorPrice-((floorPrice*.02)-royalties)
+                                rlPrice = recentListing["price"]/1000000000
+                                if rlPrice <= phFp:
+                                    yield recentListing
+                    print("Checking...")

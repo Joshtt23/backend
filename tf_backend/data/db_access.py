@@ -7,8 +7,9 @@ db = client['Holders']
 tf_holders=db["TF_Holders"]
 
 async def add_holder(wallet_id, discord_id, amount):
-    document={'wallet_id': wallet_id, 'discord_id':discord_id, 'status':'ACTIVE', 'amount':amount}
-    await tf_holders.insert_one(document)
+    key = {'wallet_id':wallet_id}
+    document={"$set":{'wallet_id': wallet_id, 'discord_id':discord_id, 'status':'ACTIVE', 'amount':amount}}
+    await tf_holders.update_one(key, document, upsert=True)
     result = await get_holder(wallet_id)
     return result
 

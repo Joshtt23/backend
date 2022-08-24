@@ -26,11 +26,14 @@ async def Paper_Tracker():
                         try:
                             floorPrice = colInfo["floor_price"]
                             floorPrice=floorPrice/1000000000
+                            mut = colData['items']
+                            mut2 = mut[0]
+                            royalties = mut2['royalty']/1000000000
 
                         except:
                             print("Collection Error")
                         else:
-                            phFp = floorPrice-((floorPrice*.12))
+                            phFp = floorPrice-((floorPrice*.02)-royalties)
                             rlPrice = recentListing["price"]/1000000000
                             if rlPrice <= phFp:
                                 yield recentListing

@@ -41,7 +41,6 @@ async def bgph(app):
                 hikari.Embed(
                     title="**PAPER FOUND**",
                     color="#996515",
-                    url=url,
                 ))
             paper_embed.set_thumbnail(
                 listing["image"]
@@ -56,6 +55,10 @@ async def bgph(app):
             paper_embed.add_field(
                 name="Price:",
                 value=price
+            )
+            paper_embed.add_field(
+                name=f"\u200b",
+                value=f"[BUY NOW]({url})"
             )
             
             
@@ -173,7 +176,7 @@ async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None
 @lightbulb.option('sinnerrole', 'Role to give')
 @lightbulb.command('addrole', 'Send sinner role embed')
 @lightbulb.implements(lightbulb.SlashCommand)
-async def verify(ctx):
+async def sinnerverify(ctx):
     callChannel= ctx.channel_id
     verifyEmbed = (
         hikari.Embed(

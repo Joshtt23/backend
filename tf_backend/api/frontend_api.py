@@ -8,7 +8,7 @@ from tf_backend.data.db_access import add_holder, get_holder
 app = Quart(__name__)
 app.config["SECRET_KEY"] = 'ToastyFriendsGang4Lyfe'
 client = APIClient(TOKEN, client_secret=CLIENT_SECRET, )
-app = cors(app, allow_origin="https://toastyfriends.club")
+app = cors(app, allow_origin="*")
 
 @app.route('/')
 def home():

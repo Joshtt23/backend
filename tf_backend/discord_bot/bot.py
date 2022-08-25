@@ -123,101 +123,6 @@ async def send(ctx):
     await og_message.edit(resp)
 
 @bot.command
-@lightbulb.option('role', 'Role to give')
-@lightbulb.command('verify', 'Send verify embed')
-@lightbulb.implements(lightbulb.SlashCommand)
-async def verify(ctx):
-    callChannel= ctx.channel_id
-    verifyEmbed = (
-        hikari.Embed(
-                        title="**Welcome to Toasty Friends!**",
-                        color="#996515",
-                    )
-                    .set_thumbnail(
-                        
-                    )   
-                    .set_footer(
-                        text=f"Toast or DIE",
-                    )
-                    .add_field(
-                        name="***VERIFY HERE***",
-                        value="\nClick <:Toast_Gang:963520515924975616> below to gain access to our server!\n\n Thank you for joining and make sure to check out <#938861568739922012> and <#938861849867321414>\n"
-                    )
-                    .add_field(
-                        name="***NO JOBS/POSITIONS/ROLES AVAILABLE***",
-                        value='Thank you!'
-                    )
-                )
-    actRow = (
-        bot.rest.build_action_row()
-
-        .add_button(hikari.ButtonStyle.SUCCESS, ("role"))
-            .set_label("")
-            .set_emoji(963520515924975616)
-            .add_to_container()
-    )
-    await bot.rest.create_message(callChannel, content=verifyEmbed,component= actRow )
-
-@bot.listen(hikari.InteractionCreateEvent)
-async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None:
-    if not isinstance(event.interaction, hikari.ComponentInteraction):
-        return
-
-    if event.interaction.custom_id == "role":
-        await event.interaction.member.add_role(942137787149352990)
-        await event.interaction.create_initial_response(
-            
-            hikari.ResponseType.MESSAGE_CREATE,  # Create a new message as response to this interaction
-            "You have been verified!",  # Message content
-            flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
-        )
-
-@bot.command
-@lightbulb.option('sinnerrole', 'Role to give')
-@lightbulb.command('addrole', 'Send sinner role embed')
-@lightbulb.implements(lightbulb.SlashCommand)
-async def sinnerverify(ctx):
-    callChannel= ctx.channel_id
-    verifyEmbed = (
-        hikari.Embed(
-                        title="**GET PINGED BY SINNER SIGNAL**",
-                        color="#996515",
-                    )
-                    .set_thumbnail(
-                        
-                    )   
-                    .set_footer(
-                        text=f"Toast or DIE",
-                    )
-                    .add_field(
-                        name="***ADD ROLE***",
-                        value="\nClick below to be pinged on all new signals!"
-                    )
-                )
-    actRow = (
-        bot.rest.build_action_row()
-
-        .add_button(hikari.ButtonStyle.SUCCESS, ("signalrole"))
-            .set_label("Add Signal Role")
-            .add_to_container()
-    )
-    await bot.rest.create_message(callChannel, content=verifyEmbed,component= actRow )
-
-@bot.listen(hikari.InteractionCreateEvent)
-async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None:
-    if not isinstance(event.interaction, hikari.ComponentInteraction):
-        return
-
-    if event.interaction.custom_id == "signalrole":
-        await event.interaction.member.add_role(1010611851517759549)
-        await event.interaction.create_initial_response(
-            
-            hikari.ResponseType.MESSAGE_CREATE,  # Create a new message as response to this interaction
-            "You have been added!",  # Message content
-            flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
-        )
-
-@bot.command
 @lightbulb.option('wallet', 'The ID of wallet to check.')
 @lightbulb.command('tokens', 'Track a wallets actions.')
 @lightbulb.implements(lightbulb.SlashCommand)
@@ -289,6 +194,62 @@ async def stats(ctx):
     resp = await HistStats(col, resp)
 
     await ctx.respond(resp)
+
+@bot.command
+@lightbulb.option('role', 'Role to give')
+@lightbulb.command('roleadder', 'Send sinner role embed')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def roleadder(ctx):
+    callChannel= ctx.channel_id
+    role = ctx.options.role
+    verifyEmbed = (
+        hikari.Embed(
+                        title=f"**GET YOUR NEW ROLE**",
+                        color="#996515",
+                        
+                    ) 
+                    .set_footer(
+                        text=f"Toast or DIE",
+                    )
+                    .add_field(
+                        name="***ADD ROLE***",
+                        value=f"\nClick below to get {role} role"
+                    )
+                )
+    roleparse = role[3:-1]
+    actRow = (
+        bot.rest.build_action_row()
+
+        .add_button(hikari.ButtonStyle.SUCCESS, (f"add{roleparse}"))
+            .set_label("Add/Remove Role")
+            .add_to_container()
+    )
+    await bot.rest.create_message(callChannel, content=verifyEmbed,component= actRow )
+    await ctx.respond(f"Role adder successfully created for {role}")
+
+@bot.listen(hikari.InteractionCreateEvent)
+async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None:
+    if not isinstance(event.interaction, hikari.ComponentInteraction):
+        return
+    role = int(event.interaction.custom_id[3:]) #returns id of role parse to number
+    if event.interaction.custom_id == f"add{role}":
+        userroles = event.interaction.member.role_ids
+        if role in userroles:
+            await event.interaction.member.remove_role(role) #This is where the role needs to be imported
+            await event.interaction.create_initial_response(
+                
+                hikari.ResponseType.MESSAGE_CREATE,  # Create a new message as response to this interaction
+                "You have been removed!",  # Message content
+                flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
+            )
+        else:
+            await event.interaction.member.add_role(role) #This is where the role needs to be imported
+            await event.interaction.create_initial_response(
+                
+                hikari.ResponseType.MESSAGE_CREATE,  # Create a new message as response to this interaction
+                "You have been added!",  # Message content
+                flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
+            )
 
     
 

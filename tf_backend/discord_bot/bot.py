@@ -251,8 +251,11 @@ async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None
                 flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
             )
 
-    
+async def AddRole(discord_id):
+    await bot.rest.add_role_to_member(guild='899757430211223642',user=discord_id, role='1002246971966365736')
 
+async def RemoveRole(discord_id):
+    await bot.rest.remove_role_from_member(guild='899757430211223642',user=discord_id, role='1002246971966365736')
 
 
 def run() -> None:

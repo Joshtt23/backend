@@ -1,6 +1,9 @@
 from quart import Quart, jsonify, request, sessions, redirect
 from quart_cors import cors
 from zenora import APIClient
+from tf_backend.discord_bot.bot import RemoveRole
+from tf_backend.discord_bot.bot import AddRole
+from tf_backend.holders.WalletInfo import NFTCheck
 from tf_backend.api.config import CLIENT_SECRET, REDIRECT_URI, TOKEN
 
 from tf_backend.data.db_access import add_holder, get_holder
@@ -10,12 +13,6 @@ app.config["SECRET_KEY"] = 'ToastyFriendsGang4Lyfe'
 client = APIClient(TOKEN, client_secret=CLIENT_SECRET, )
 app = cors(app, allow_origin="*")
 
-@app.route('/')
-def home():
-    if 'token' in sessions:
-        bearer_client = APIClient(sessions.get('token'), bearer=True)
-        current_user = bearer_client.users.get_current_user
-        return 
 
 @app.route("/oauth/callback")
 async def callback():
@@ -34,8 +31,14 @@ async def logout():
 async def SetHolder():
     wallet_id = request.args.get("wallet_id")
     discord_id = request.args.get("discord_id")
-    amount = request.args.get("amount")
-    resp = await add_holder(wallet_id, discord_id, amount)
+    holder_info = NFTCheck(wallet_id)
+    status = holder_info[0]
+    amount = holder_info[1]
+    resp = await add_holder(wallet_id, discord_id, status, amount)
+    if status == "ACTIVE":
+        await AddRole(discord_id)
+    if status == "INACTIVE":
+        await RemoveRole(discord_id)
     return resp
 
 

@@ -18,7 +18,10 @@ async def add_holder(wallet_id, discord_id, status, amount):
 
 async def get_holder(wallet_id):
     document = await tf_holders.find_one({'wallet_id':wallet_id})
-    return json.loads(json_util.dumps(document))
+    if document is None:
+        return "No Holder Found!"
+    else:
+        return json.loads(json_util.dumps(document))
 
 async def update_holder(wallet_id, amount, status):
     #update doc based on wallet

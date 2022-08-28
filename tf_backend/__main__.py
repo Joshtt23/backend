@@ -10,8 +10,8 @@ from tf_backend.holders.WalletInfo import HolderChecker
 
 config = Config()
 config.bind=["0.0.0.0:8888"]
-config.certfile = "./tf_backend/api/certs/MyCert.crt"
-config.keyfile = "./tf_backend/api/certs/MyKey.key"
+config.certfile = "./tf_backend/api/certs/MyCert.pem"
+config.keyfile = "./tf_backend/api/certs/MyKey.pem"
 
 
 async def busyloop():
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     scheduler.start()
     loop = asyncio.get_event_loop()
     loop.create_task(serve(app, config, 
-    shutdown_trigger=busyloop
+    shutdown_trigger=busyloop,
     ))
     bot.run()
     

@@ -46,6 +46,8 @@ def UpdateClaim(wallet_id, amount_claimed):
     #updated db with total claimed
     return 0
 
+    #ADD ROLE PER SIGNAL
+
 
 async def HolderChecker():
     all_holders = await get_all_holders()

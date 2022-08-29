@@ -1,6 +1,5 @@
 from quart import Quart, jsonify, request, sessions, redirect
 from quart_cors import cors
-from zenora import APIClient
 from tf_backend.discord_bot.bot import RemoveRole
 from tf_backend.discord_bot.bot import AddRole
 from tf_backend.holders.WalletInfo import NFTCheck
@@ -10,7 +9,6 @@ from tf_backend.data.db_access import add_holder, get_holder
 
 app = Quart(__name__)
 # app.config["SECRET_KEY"] = 'ToastyFriendsGang4Lyfe'
-client = APIClient(TOKEN, client_secret=CLIENT_SECRET )
 app = cors(app, allow_origin="*")
 
 

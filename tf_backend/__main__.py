@@ -20,7 +20,7 @@ async def busyloop():
 
 if __name__ == "__main__":
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(HolderChecker, 'interval', minutes=10)
+    scheduler.add_job(HolderChecker, 'interval', seconds=5)
     scheduler.start()
     loop = asyncio.get_event_loop()
     loop.create_task(serve(app, config, 

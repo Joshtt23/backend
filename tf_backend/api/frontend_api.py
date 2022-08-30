@@ -2,7 +2,7 @@ from quart import Quart, jsonify, request, sessions, redirect
 from quart_cors import cors
 from tf_backend.discord_bot.bot import RemoveRole
 from tf_backend.discord_bot.bot import AddRole
-from tf_backend.holders.WalletInfo import NFTCheck
+from tf_backend.holders.WalletInfo import NFTCheck, ClaimStaking
 from tf_backend.api.config import CLIENT_SECRET, REDIRECT_URI, TOKEN
 
 from tf_backend.data.db_access import add_holder, get_holder
@@ -10,19 +10,6 @@ from tf_backend.data.db_access import add_holder, get_holder
 app = Quart(__name__)
 # app.config["SECRET_KEY"] = 'ToastyFriendsGang4Lyfe'
 app = cors(app, allow_origin="*")
-
-
-@app.route("/oauth/callback")
-async def callback():
-    code = request.args("code")
-    access_token = client.oauth.get_access_token(code, REDIRECT_URI).access_token
-    sessions['token']=access_token
-    return redirect('/')
-
-@app.route('/logout')
-async def logout():
-    sessions.clear()
-    return redirect("/")
     
 
 @app.route("/set_holder", methods=["POST"])
@@ -48,6 +35,12 @@ async def holder(wallet_id):
 @app.route("/test")
 async def Test():
     return "It works"
+
+@app.route("/claim")
+async def claim():
+    wallet_id = request.args.get("wallet_id")
+    claim = await ClaimStaking(wallet_id)
+    return str(claim)
 
 
 

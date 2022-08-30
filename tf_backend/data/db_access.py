@@ -4,9 +4,9 @@ import motor.motor_asyncio
 import json
 from bson import ObjectId, json_util
 #for production 
-# client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://Joshtt23:Tyler03061998?!@Holder-DB:27017/Holders?authSource=admin")
+client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://Joshtt23:Tyler03061998?!@Holder-DB:27017/Holders?authSource=admin")
 #for development
-client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+# client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 db = client['Holders']
 tf_holders=db["TF_Holders"]
 

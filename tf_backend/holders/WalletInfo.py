@@ -88,7 +88,7 @@ async def HolderChecker():
         holder_info = NFTCheck(wallet_id)
         status = holder_info[0]
         amount = holder_info[1]
-        await update_holder(wallet_id, status, amount)
+        await update_holder(wallet_id, amount, status)
         await UpdateStaking(wallet_id)
         if status == "ACTIVE":
             await AddRole(discord_id)

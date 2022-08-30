@@ -33,8 +33,7 @@ async def ClaimStaking(wallet_id):
 
 async def UpdateStaking(wallet_id):
     resp = await get_holder(wallet_id)
-    amount = resp["amount"]
-    print(amount)
+    amount = int(resp["amount"])
     start_staking = resp["staking start"]
     current_time = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S')
     cnvrt2 = datetime.strptime(current_time, '%Y-%m-%dT%H:%M:%S')

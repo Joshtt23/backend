@@ -1,22 +1,35 @@
-from asyncio import tasks
 from datetime import datetime, timezone
-import logging
-from solana_nfts import Client
 from tf_backend.data.db_access import remove_holder, update_holder, get_all_holders, get_holder, update_reward, UpdatedClaimed
 from tf_backend.discord_bot.bot import AddRole, RemoveRole
+from jsonrpcclient import request, parse, Ok
+import requests
 
-nft_client = Client()
 
-
-def NFTCheck(wallet_id):
-    nfts = nft_client.fetch_nfts_from_wallet_address(wallet_id)
+def NFTCheck(wallet_id): 
+    response = requests.post(
+        "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
+        json=request("qn_fetchNFTs", {
+            "wallet": wallet_id,
+            "omitFields": [
+                "provenance",
+                "traits",
+                "description",
+                "tokenAddress",
+                "imageUrl",
+                "chain",
+                "creators",
+                "network"
+            ],
+            "page": 1,
+            "perPage": 1000
+        })
+    )
+    parsed = parse(response.json())
+    NFTs = parsed.result["assets"]
     count = 0
     Status = "INACTIVE"
-    for nft in nfts:
-        nft_token_metadata = nft["token_metadata"]
-        nft_metadata = nft_token_metadata["metadata"]
-        nft_data = nft_metadata["data"]
-        if nft_data["symbol"] == 'TOAST':
+    for nft in NFTs:
+        if nft["collectionAddress"] == '493ZbidfhGB51vkwBPtLUc6onMXFcRmsPkrNY9FJXQSR':
             count += 1
             Status = "ACTIVE"
 

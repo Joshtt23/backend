@@ -5,8 +5,8 @@ import os
 
 
 bot = lightbulb.BotApp(
-    token=os.environ['TOKEN'],
-    default_enabled_guilds=int(os.environ['DEFAULT_GUILD_ID']),
+    token=os.environ['SABC_TOKEN'],
+    default_enabled_guilds=int(os.environ['SABC_DEFAULT_GUILD_ID2']),
     help_slash_command=False,
 )
 
@@ -69,7 +69,7 @@ async def add_bid(event: hikari.InteractionCreateEvent) -> None:
         return
     if event.interaction.custom_id == "start":
         user_roles = event.interaction.member.role_ids
-        if 941508613724332052 in user_roles:
+        if 972840974990589954 in user_roles:
             await event.interaction.create_initial_response(
                 hikari.ResponseType.DEFERRED_MESSAGE_UPDATE,  # Create a new message as response to this interaction
             )

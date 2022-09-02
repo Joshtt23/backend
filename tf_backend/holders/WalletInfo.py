@@ -41,7 +41,6 @@ async def ClaimStaking(wallet_id):
     total_rewards = resp["total rewards"]
     claimed_rewards = resp["claimed rewards"]
     claim_amount = total_rewards - claimed_rewards
-    await UpdateClaim(wallet_id, claim_amount, claimed_rewards)
     return claim_amount
 
 async def UpdateStaking(wallet_id):
@@ -88,7 +87,7 @@ async def UpdateStaking(wallet_id):
     await update_reward(wallet_id, total_rewards)
 
 
-async def UpdateClaim(wallet_id, amount_claimed, claimed_rewards):
+async def UpdateClaimed(wallet_id, amount_claimed, claimed_rewards):
     claimed = claimed_rewards + amount_claimed
     await UpdatedClaimed(wallet_id, claimed)
 

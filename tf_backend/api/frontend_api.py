@@ -1,9 +1,8 @@
-from quart import Quart, jsonify, request, sessions, redirect
+from quart import Quart, request
 from quart_cors import cors
 from tf_backend.discord_bot.bot import RemoveRole
 from tf_backend.discord_bot.bot import AddRole
-from tf_backend.holders.WalletInfo import NFTCheck, ClaimStaking
-from tf_backend.api.config import CLIENT_SECRET, REDIRECT_URI, TOKEN
+from tf_backend.holders.WalletInfo import NFTCheck, ClaimStaking, UpdateClaimed
 
 from tf_backend.data.db_access import add_holder, get_holder
 
@@ -41,6 +40,15 @@ async def claim():
     wallet_id = request.args.get("wallet_id")
     claim = await ClaimStaking(wallet_id)
     return str(claim)
+
+@app.route("/updateclaimed")
+async def UpdateClaim():
+    wallet_id = request.args.get("wallet_id")
+    claim_amount = request.args.get("claim_amount")
+    claimed = request.args.get("claimed")
+    await UpdateClaimed(wallet_id, claim_amount, claimed )
+
+
 
 
 

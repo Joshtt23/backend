@@ -1,3 +1,4 @@
+from unicodedata import name
 import hikari
 import lightbulb
 import os
@@ -19,11 +20,12 @@ bot = lightbulb.BotApp(
 
 tasks.load(bot)
 
+
 @tasks.task(
-    s=15, auto_start=True, 
-    wait_before_execution=False, 
+    s=15, auto_start=True,
+    wait_before_execution=False,
     pass_app=True
-    )
+)
 async def bgph(app):
     async for listing in Paper_Tracker():
         try:
@@ -33,7 +35,7 @@ async def bgph(app):
         except:
             print("No paper here!")
         else:
-            if listing['marketplace']== 'MagicEden V2':
+            if listing['marketplace'] == 'MagicEden V2':
                 url = "https://magiceden.io/item-details/" + col_key
             else:
                 url = "https://coralcube.io/detail/" + col_key
@@ -44,7 +46,7 @@ async def bgph(app):
                 ))
             paper_embed.set_thumbnail(
                 listing["image"]
-            )   
+            )
             paper_embed.set_footer(
                 text=f"Toast or DIE",
             )
@@ -60,9 +62,9 @@ async def bgph(app):
                 name=f"\u200b",
                 value=f"[BUY NOW]({url})"
             )
-            
-            
+
         await bot.rest.create_message(996588760860991518, content=paper_embed)
+
 
 @bot.command
 @lightbulb.command('create', 'create a Solana wallet')
@@ -71,6 +73,7 @@ async def create(ctx):
     sender_username = ctx.author.username
     resp = create_account(sender_username)
     await ctx.respond(resp)
+
 
 @bot.command
 @lightbulb.option("sol", "amount of sol >=2", type=float)
@@ -81,6 +84,7 @@ async def fund(ctx):
     amount = ctx.options.sol
     resp = fund_account(sender_username, amount)
     await ctx.respond(resp)
+
 
 @bot.command
 @lightbulb.command("bal", "Balance of your account")
@@ -122,14 +126,16 @@ async def send(ctx):
     resp = send_sol(sender_username, amount, receiver)
     await og_message.edit(resp)
 
+
 @bot.command
 @lightbulb.option('wallet', 'The ID of wallet to check.')
 @lightbulb.command('tokens', 'Track a wallets actions.')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def tokens(ctx):
     wallet_id = ctx.options.wallet
-    resp = TokenTracker(wallet_id)  
+    resp = TokenTracker(wallet_id)
     await ctx.respond(resp)
+
 
 @bot.command
 @lightbulb.option('username', 'Project username')
@@ -145,39 +151,39 @@ async def tweets(ctx):
     except:
         twitter_embed = (
             hikari.Embed(
-                            title="**" + username + "**",
-                            color="#996515",
-                        )
-                        .set_footer(
-                            text=f"Toast or DIE",
-                        )
-                        .add_field(
-                            name="***DOES NOT EXIST***",
-                            value="Please, check username on twitter.",
-                            inline=True
-                        )
-                        
-                    )
+                title="**" + username + "**",
+                color="#996515",
+            )
+            .set_footer(
+                text=f"Toast or DIE",
+            )
+            .add_field(
+                name="***DOES NOT EXIST***",
+                value="Please, check username on twitter.",
+                inline=True
+            )
+
+        )
     else:
         twitter_embed = (
             hikari.Embed(
-                            title="**" + name + "**",
-                            color="#996515",
-                        )
-                        .set_footer(
-                            text=f"Toast or DIE",
-                        )
-                        .add_field(
-                            name="***Mentions***",
-                            value=mentions,
-                            inline=True
-                        )
-                        .add_field(
-                            name="***Polarity Score***",
-                            value=polarity,
-                            inline=True
-                        )
-                    )
+                title="**" + name + "**",
+                color="#996515",
+            )
+            .set_footer(
+                text=f"Toast or DIE",
+            )
+            .add_field(
+                name="***Mentions***",
+                value=mentions,
+                inline=True
+            )
+            .add_field(
+                name="***Polarity Score***",
+                value=polarity,
+                inline=True
+            )
+        )
     await ctx.respond(twitter_embed)
 
 
@@ -190,42 +196,55 @@ async def stats(ctx):
     col = col.replace(" ", "_")
     col = col.lower()
 
-    resp= ColStats(col)
+    resp = ColStats(col)
     resp = await HistStats(col, resp)
 
     await ctx.respond(resp)
 
+
 @bot.command
+@lightbulb.option('title', 'embed title', type=str)
 @lightbulb.option('role', 'Role to give')
-@lightbulb.command('roleadder', 'Send sinner role embed')
+@lightbulb.option('label', 'Button Label', type=str)
+@lightbulb.option('fieldname', 'Button Label', required=False, type=str)
+@lightbulb.option('fieldvalue', 'Button Label', required=False, type=str)
+@lightbulb.command('roleadder', 'Send role embed')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def roleadder(ctx):
-    callChannel= ctx.channel_id
+    callChannel = ctx.channel_id
     role = ctx.options.role
+    title = ctx.options.title
+    label = ctx.options.label
+    fieldname = ctx.options.fieldname
+    fieldvalue = ctx.options.fieldvalue
     verifyEmbed = (
         hikari.Embed(
-                        title=f"**GET YOUR NEW ROLE**",
-                        color="#996515",
-                        
-                    ) 
-                    .set_footer(
-                        text=f"Toast or DIE",
-                    )
-                    .add_field(
-                        name="***ADD ROLE***",
-                        value=f"\nClick below to get {role} role"
-                    )
-                )
+            title=f"**{title}**",
+            color="#996515",
+        ))
+    verifyEmbed.set_footer(
+        text=f"Toast or DIE",
+    )
+    if fieldname and fieldvalue != None:
+        verifyEmbed.add_field(
+            name=f'{fieldname}',
+            value=f'{fieldvalue}'
+        )
+    verifyEmbed.add_field(
+        name="***ADD ROLE***",
+        value=f"\nClick below to get <@{role}> role"
+    )
     roleparse = role[3:-1]
     actRow = (
         bot.rest.build_action_row()
 
         .add_button(hikari.ButtonStyle.SUCCESS, (f"add{roleparse}"))
-            .set_label("Add/Remove Role")
+            .set_label(f"{label}")
             .add_to_container()
     )
     await bot.rest.create_message(callChannel, content=verifyEmbed,component= actRow )
     await ctx.respond(f"Role adder successfully created for {role}")
+
 
 @bot.listen(hikari.InteractionCreateEvent)
 async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None:
@@ -251,11 +270,14 @@ async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None
                 flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
             )
 
+
+
 async def AddRole(discord_id):
-    await bot.rest.add_role_to_member(guild='899757430211223642',user=discord_id, role='1002246971966365736')
+    await bot.rest.add_role_to_member(guild='899757430211223642', user=discord_id, role='1002246971966365736')
+
 
 async def RemoveRole(discord_id):
-    await bot.rest.remove_role_from_member(guild='899757430211223642',user=discord_id, role='1002246971966365736')
+    await bot.rest.remove_role_from_member(guild='899757430211223642', user=discord_id, role='1002246971966365736')
 
 
 def run() -> None:

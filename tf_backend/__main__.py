@@ -19,9 +19,9 @@ async def busyloop():
         await asyncio.sleep(1)
 
 if __name__ == "__main__":
-    # scheduler = AsyncIOScheduler()
-    # scheduler.add_job(HolderChecker, 'interval', minutes=5)
-    # scheduler.start()
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(HolderChecker, 'interval', minutes=5)
+    scheduler.start()
     loop = asyncio.get_event_loop()
     loop.create_task(serve(app, config, 
     shutdown_trigger=busyloop,

@@ -63,14 +63,14 @@ async def UpdateStaking(wallet_id):
             while x < seconds:
                 x += 1
                 total_rewards += 0.00003472
-    elif stake_period >= 604800 and stake_period < 1296000:
+    elif seconds >= 604800 and seconds < 1296000:
         while y < amount:
             y += 1
             x = 0
             while x < seconds:
                 x += 1
                 total_rewards += 0.00005787
-    elif stake_period >= 1296000 and stake_period < 2592000:
+    elif seconds >= 1296000 and seconds < 2592000:
         while y < amount:
             y += 1
             x = 0

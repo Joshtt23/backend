@@ -45,7 +45,8 @@ async def claim():
 @app.route("/updateclaimed")
 async def UpdateClaim():
     wallet_id = request.args.get("wallet_id")
-    claimed = request.args.get("claimed")
+    claimed = request.args.get("claimed", type=int)
+    
     await UpdatedClaimed(wallet_id, claimed )
     return "Claim Updated"
 

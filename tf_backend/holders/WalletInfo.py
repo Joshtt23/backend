@@ -87,10 +87,6 @@ async def UpdateStaking(wallet_id):
     await update_reward(wallet_id, total_rewards)
 
 
-async def UpdateClaimed(wallet_id, amount_claimed, claimed_rewards):
-    claimed = claimed_rewards + amount_claimed
-    await UpdatedClaimed(wallet_id, claimed)
-
 #ADD ROLE PER AMOUNT
 async def HolderChecker():
     all_holders = await get_all_holders()

@@ -5,33 +5,58 @@ from jsonrpcclient import request, parse, Ok
 import requests
 
 
-def NFTCheck(wallet_id): 
-    response = requests.post(
-        "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
-        json=request("qn_fetchNFTs", {
-            "wallet": wallet_id,
-            "omitFields": [
-                "provenance",
-                "traits",
-                "description",
-                "tokenAddress",
-                "imageUrl",
-                "chain",
-                "creators",
-                "network"
-            ],
-            "page": 1,
-            "perPage": 1000
-        })
-    )
-    parsed = parse(response.json())
-    NFTs = parsed.result["assets"]
+def NFTCheck(wallet_id):
+    response_og = requests.post(
+            "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
+            json=request("qn_fetchNFTs", {
+                "wallet": wallet_id,
+                "omitFields": [
+                    "provenance",
+                    "traits",
+                    "description",
+                    "tokenAddress",
+                    "imageUrl",
+                    "chain",
+                    "creators",
+                    "network"
+                ],
+                "page": 1,
+                "perPage": 1000
+            })
+        )
+    parsed_og = parse(response_og.json())
+    total_pages = parsed_og.result["totalPages"]
+    page = 1
     count = 0
     Status = "INACTIVE"
-    for nft in NFTs:
-        if nft["collectionAddress"] == '493ZbidfhGB51vkwBPtLUc6onMXFcRmsPkrNY9FJXQSR':
-            count += 1
-            Status = "ACTIVE"
+
+    while page <= total_pages:
+        response = requests.post(
+            "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
+            json=request("qn_fetchNFTs", {
+                "wallet": wallet_id,
+                "omitFields": [
+                    "provenance",
+                    "traits",
+                    "description",
+                    "tokenAddress",
+                    "imageUrl",
+                    "chain",
+                    "creators",
+                    "network"
+                ],
+                "page": page,
+                "perPage": 1000
+            })
+        )
+        parsed = parse(response.json())
+        NFTs = parsed.result["assets"]
+        page += 1
+        for nft in NFTs:
+            if nft["collectionAddress"] == '493ZbidfhGB51vkwBPtLUc6onMXFcRmsPkrNY9FJXQSR':
+                count += 1
+                if Status != "ACTIVE":
+                    Status = "ACTIVE"
 
     return Status, count
 

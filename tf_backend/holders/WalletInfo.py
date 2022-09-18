@@ -127,5 +127,5 @@ async def HolderChecker():
             await AddRole(discord_id)
         if status == "INACTIVE":
             await RemoveRole(discord_id)
-            await remove_holder(wallet_id)
+            # await remove_holder(wallet_id)
 

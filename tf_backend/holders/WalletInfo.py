@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
-from tf_backend.data.db_access import remove_holder, update_holder, get_all_holders, get_holder, update_reward
 from tf_backend.discord_bot.bot import AddRole, RemoveRole
+from tf_backend.data.db_access import remove_holder, update_holder, get_all_holders, get_holder, update_reward
 from jsonrpcclient import request, parse, Ok
 import requests
 

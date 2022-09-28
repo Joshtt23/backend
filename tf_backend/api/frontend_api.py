@@ -16,6 +16,7 @@ app = cors(app, allow_origin="*")
 async def SetHolder():
     wallet_id = request.args.get("wallet_id")
     discord_id = request.args.get("discord_id")
+    print(wallet_id)
     holder_info = NFTCheck(wallet_id)
     status = holder_info[0]
     amount = holder_info[1]

@@ -6,6 +6,7 @@ import requests
 
 
 def NFTCheck(wallet_id):
+    print(wallet_id)
     response_og = requests.post(
             "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
             json=request("qn_fetchNFTs", {

@@ -7,7 +7,6 @@ import requests
 
 
 def NFTCheck(wallet_id):
-    logging.warning(wallet_id)
     response_og = requests.post(
             "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
             json=request("qn_fetchNFTs", {
@@ -26,7 +25,6 @@ def NFTCheck(wallet_id):
                 "perPage": 1000
             })
         )
-    logging.warning(response_og)
     parsed_og = parse(response_og.json())
     total_pages = parsed_og.result["totalPages"]
     page = 1

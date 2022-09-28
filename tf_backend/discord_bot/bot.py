@@ -3,6 +3,8 @@ import hikari
 import lightbulb
 import os
 import string
+from tf_backend.data.db_access import add_holder
+from tf_backend.holders.WalletInfo import NFTCheck
 from tf_backend.discord_bot.extensions.col_stats import ColStats, HistStats
 from tf_backend.discord_bot.extensions.tweet_tracker import GetMentions, GetName, GetUserId, SearchTweets
 from tf_backend.discord_bot.extensions.wallet_tracker import TokenTracker
@@ -279,6 +281,24 @@ async def AddRole(discord_id):
 async def RemoveRole(discord_id):
     await bot.rest.remove_role_from_member(guild='899757430211223642', user=discord_id, role='1002246971966365736')
 
+@bot.command
+@lightbulb.command('verify', 'Send role embed')
+@lightbulb.option("wallet",'Enter your wallet address here!')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def verify(ctx):
+    wallet_id = ctx.options.wallet
+    discord_id = ctx.user_id
+    holder_info = NFTCheck(wallet_id)
+    status = holder_info[0]
+    amount = holder_info[1]
+    resp = await add_holder(wallet_id, discord_id, status, amount)
+    if status == "ACTIVE":
+        await AddRole(discord_id)
+        ctx.respond("You have been verified!")
+    if status == "INACTIVE":
+        await RemoveRole(discord_id)
+        ctx.respond("No Toasty Friends Detected!")
+    
 
 def run() -> None:
     if os.name != 'nt':

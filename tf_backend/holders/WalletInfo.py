@@ -24,6 +24,7 @@ def NFTCheck(wallet_id):
                 "perPage": 1000
             })
         )
+    print(response_og)
     parsed_og = parse(response_og.json())
     total_pages = parsed_og.result["totalPages"]
     page = 1

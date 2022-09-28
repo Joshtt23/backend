@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import logging
 from tf_backend.discord_bot.bot import AddRole, RemoveRole
 from tf_backend.data.db_access import remove_holder, update_holder, get_all_holders, get_holder, update_reward
 from jsonrpcclient import request, parse, Ok
@@ -6,7 +7,7 @@ import requests
 
 
 def NFTCheck(wallet_id):
-    print(wallet_id)
+    logging.warning(wallet_id)
     response_og = requests.post(
             "https://empty-radial-paper.solana-mainnet.discover.quiknode.pro/b445018a765524154d66d84417fca5130233526c/",
             json=request("qn_fetchNFTs", {
@@ -25,7 +26,7 @@ def NFTCheck(wallet_id):
                 "perPage": 1000
             })
         )
-    print(response_og)
+    logging.warning(response_og)
     parsed_og = parse(response_og.json())
     total_pages = parsed_og.result["totalPages"]
     page = 1

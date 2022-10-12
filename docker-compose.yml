@@ -33,13 +33,13 @@ services:
   
     ports:
     - '27017-27019:27017-27019'
-  sabc_bot:
-    image: sabcauctionbot
-    restart: unless-stopped
-    environment:
-      - SABC_TOKEN=MTAxNDQzOTQwNDc5MTY2ODgwNg.GD9dNE.e7dkAC7VR7uhnapukzIVvqPV2WaNwZLwsyx4Pg
-      - SABC_DEFAULT_GUILD_ID2=920097128993406987
-    build:
-      context: .
-      dockerfile: ./sabc_bot/Dockerfile
+  # sabc_bot:
+  #   image: sabcauctionbot
+  #   restart: unless-stopped
+  #   environment:
+  #     - SABC_TOKEN=MTAxNDQzOTQwNDc5MTY2ODgwNg.GD9dNE.e7dkAC7VR7uhnapukzIVvqPV2WaNwZLwsyx4Pg
+  #     - SABC_DEFAULT_GUILD_ID2=920097128993406987
+  #   build:
+  #     context: .
+  #     dockerfile: ./sabc_bot/Dockerfile
   

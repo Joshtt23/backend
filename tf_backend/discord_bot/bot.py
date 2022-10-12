@@ -5,7 +5,7 @@ import os
 import string
 # from tf_backend.data.db_access import add_holder
 # from tf_backend.holders.WalletInfo import NFTCheck
-from tf_backend.discord_bot.extensions.col_stats import ColStats, HistStats
+from tf_backend.discord_bot.extensions.col_stats import ColStats
 from tf_backend.discord_bot.extensions.tweet_tracker import GetMentions, GetName, GetUserId, SearchTweets
 from tf_backend.discord_bot.extensions.wallet_tracker import TokenTracker
 from tf_backend.discord_bot.extensions.wallets import create_account, fund_account, get_balance, send_sol

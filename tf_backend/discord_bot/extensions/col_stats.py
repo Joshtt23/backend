@@ -1,9 +1,8 @@
-
-import requests
 import json
 from pyppeteer import launch
 from pyppeteer_stealth import stealth
 import hikari
+import requests
 
 
 #redo using other endpoints need fp, vol, and listed

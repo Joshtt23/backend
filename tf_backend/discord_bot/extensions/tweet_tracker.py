@@ -29,9 +29,7 @@ def GetName(username):
 
 def SearchTweets(kwarg):
     r = api.search_tweets(query=kwarg)
-    tweetTXT= []
     count = 0
-    testimonial = None
     total = 0
     for tweet in r.data:
         score = sid_obj.polarity_scores(tweet.text)

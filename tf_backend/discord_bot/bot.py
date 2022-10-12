@@ -199,7 +199,7 @@ async def stats(ctx):
     col = col.lower()
 
     resp = ColStats(col)
-    resp = await HistStats(col, resp)
+    # resp = await HistStats(col, resp)
 
     await ctx.respond(resp)
 

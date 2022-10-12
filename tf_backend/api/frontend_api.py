@@ -1,8 +1,11 @@
+import collections
 import logging
+from xml.etree.ElementTree import tostring
 from quart import Quart, request
 from quart_cors import cors
-from tf_backend.discord_bot.bot import RemoveRole
-from tf_backend.discord_bot.bot import AddRole
+from tf_backend.discord_bot.extensions.tweet_tracker import GetName, SearchTweets
+from tf_backend.discord_bot.extensions.col_stats import ColStats
+from tf_backend.discord_bot.bot import AddRole, RemoveRole
 from tf_backend.holders.WalletInfo import NFTCheck, ClaimStaking
 from tf_backend.data.db_access import UpdatedClaimed
 
@@ -51,7 +54,19 @@ async def UpdateClaim():
     await UpdatedClaimed(wallet_id, claimed )
     return "Claim Updated"
 
+@app.route("/stats")
+async def col_stats():
+    collection = request.args.get("collection")
+    resp = ColStats(collection)
+    return resp
 
+@app.route("/TwitterScore")
+async def twitter_score():
+    username = request.args.get("username")
+    name = GetName(username)
+    polarity = SearchTweets(username)
+    resp = [name, polarity]
+    return resp
 
 
 

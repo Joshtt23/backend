@@ -234,7 +234,7 @@ async def roleadder(ctx):
         )
     verifyEmbed.add_field(
         name="***ADD ROLE***",
-        value=f"\nClick below to get <@{role}> role"
+        value=f"\nClick below to get {role} role"
     )
     roleparse = role[3:-1]
     actRow = (

@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 import os
 from pytwitter import Api
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -42,12 +43,10 @@ def SearchTweets(kwarg):
     return polarity
 
 def GetMentions(userID):
-    today = datetime.date.today()
-    week_ago = today - datetime.timedelta(days=7)
-    r = api.get_mentions(user_id=userID,end_time=week_ago)
+    r = api.get_mentions(user_id=userID)
 
     count = 0
     for mention in r.data:
         count += 1
 
-    return count
+    return "Being Fixed"

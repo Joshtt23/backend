@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import os
 from pytwitter import Api
@@ -43,10 +43,16 @@ def SearchTweets(kwarg):
     return polarity
 
 def GetMentions(userID):
-    r = api.get_mentions(user_id=userID)
+    now = datetime.now()
+    logging.warning(now)
+    seven_ago = now - timedelta(days=7)
+    logging.warning(seven_ago)
+    seven_ago_str = seven_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+    logging.warning(seven_ago_str)
+    r = api.get_mentions(user_id=userID, start_time=seven_ago_str)
 
     count = 0
     for mention in r.data:
         count += 1
 
-    return "Being Fixed"
+    return count

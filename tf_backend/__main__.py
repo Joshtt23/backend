@@ -10,9 +10,8 @@ from tf_backend.holders.WalletInfo import HolderChecker
 
 config = Config()
 config.bind=["0.0.0.0:8888"]
-config.certfile = "./tf_backend/api/certs/ssl-bundle.crt"
-config.keyfile = "./tf_backend/api/certs/MyKey.pem"
-
+# config.certfile = "./tf_backend/api/certs/ssl-bundle.crt"
+# config.keyfile = "./tf_backend/api/certs/MyKey.pem"
 
 async def busyloop():
     while True:

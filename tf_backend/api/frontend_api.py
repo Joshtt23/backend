@@ -71,4 +71,5 @@ async def twitter_score():
 
 
 def run() -> None:
-    app.run()
+    context = ('./certs/ssl-bundle.crt', './certs/MyKey.pem')
+    app.run(ssl_context=context)

@@ -9,9 +9,9 @@ solana==0.25.1
 virtualenv==20.16.3
 vaderSentiment==3.3.2
 hypercorn==0.13.2
-quart==0.18.0
-Quart-CORS==0.5.0
-Quart-Motor==2.4.4
+quart==0.19.4
+Quart-CORS==0.7.0
+Quart-Motor==2.4.6
 motor==3.0.0
 pymongo==4.2.0
 Zenora==0.0.3

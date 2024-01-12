@@ -198,7 +198,8 @@ async def stats(ctx):
     col = col.replace(" ", "_")
     col = col.lower()
 
-    collection_data = ColStats(col)
+    # collection_data = ColStats(col)
+    col= None
 
     url = "https://magiceden.io/marketplace/" + col
     col = col.replace("_", " ")

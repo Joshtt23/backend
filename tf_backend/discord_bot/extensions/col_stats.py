@@ -20,10 +20,11 @@ import requests
 
 def ColStats(col):
 
-    col_url = "https://api.coralcube.io/v1/getItems?offset=0&page_size=1&ranking=price_asc&symbol=" + str(col)
-    headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'}  
-    url_col_info = requests.get(col_url, headers=headers)
-    collection_data = json.loads(url_col_info.text)
+    # col_url = "https://api.coralcube.io/v1/getItems?offset=0&page_size=1&ranking=price_asc&symbol=" + str(col)
+    # headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'}  
+    # url_col_info = requests.get(col_url, headers=headers)
+    # collection_data = json.loads(url_col_info.text)
+    pass
 
     return collection_data
 

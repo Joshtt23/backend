@@ -57,7 +57,8 @@ async def UpdateClaim():
 @app.route("/stats")
 async def col_stats():
     collection = request.args.get("collection")
-    resp = ColStats(collection)
+    # resp = ColStats(collection)
+    resp = "offline"
     return resp
 
 @app.route("/TwitterScore")

@@ -16,7 +16,7 @@ services:
       - CLIENT_SECRET=0ixdXvEA_2KsqA1XXytekkzCXXpR2ZvpxXHBZo65F0B_BtOu53
     build:
       context: .
-      dockerfile: /Dockerfile
+      dockerfile: ./tf_backend/Dockerfile
     ports:
       - "8888:8888"
   database:

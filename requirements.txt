@@ -1,6 +1,6 @@
 asyncio==3.4.3
-hikari==2.0.0.dev110
-hikari-lightbulb==2.2.4
+hikari==2.0.0.dev122
+hikari-lightbulb==2.3.5
 pyppeteer @ git+https://github.com/pyppeteer/pyppeteer@f98f9030d3d40dc629bf08f93672f05caf8dfb0e
 pyppeteer-stealth==2.7.3
 python-dotenv==0.20.0

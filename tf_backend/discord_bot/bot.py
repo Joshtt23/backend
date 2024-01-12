@@ -23,49 +23,49 @@ bot = lightbulb.BotApp(
 tasks.load(bot)
 
 
-@tasks.task(
-    s=15, auto_start=True,
-    wait_before_execution=False,
-    pass_app=True
-)
-async def bgph(app):
-    async for listing in Paper_Tracker():
-        try:
-            price = str(listing["price"]/1000000000)
-            col_name = str(listing["collection_name"])
-            col_key = str(listing["mint"])
-        except:
-            print("No paper here!")
-        else:
-            if listing['marketplace'] == 'MagicEden V2':
-                url = "https://magiceden.io/item-details/" + col_key
-            else:
-                url = "https://coralcube.io/detail/" + col_key
-            paper_embed = (
-                hikari.Embed(
-                    title="**PAPER FOUND**",
-                    color="#996515",
-                ))
-            paper_embed.set_thumbnail(
-                listing["image"]
-            )
-            paper_embed.set_footer(
-                text=f"Toast or DIE",
-            )
-            paper_embed.add_field(
-                name="Collection:",
-                value=col_name
-            )
-            paper_embed.add_field(
-                name="Price:",
-                value=price
-            )
-            paper_embed.add_field(
-                name=f"\u200b",
-                value=f"[BUY NOW]({url})"
-            )
+# @tasks.task(
+#     s=15, auto_start=True,
+#     wait_before_execution=False,
+#     pass_app=True
+# )
+# async def bgph(app):
+#     async for listing in Paper_Tracker():
+#         try:
+#             price = str(listing["price"]/1000000000)
+#             col_name = str(listing["collection_name"])
+#             col_key = str(listing["mint"])
+#         except:
+#             print("No paper here!")
+#         else:
+#             if listing['marketplace'] == 'MagicEden V2':
+#                 url = "https://magiceden.io/item-details/" + col_key
+#             else:
+#                 url = "https://coralcube.io/detail/" + col_key
+#             paper_embed = (
+#                 hikari.Embed(
+#                     title="**PAPER FOUND**",
+#                     color="#996515",
+#                 ))
+#             paper_embed.set_thumbnail(
+#                 listing["image"]
+#             )
+#             paper_embed.set_footer(
+#                 text=f"Toast or DIE",
+#             )
+#             paper_embed.add_field(
+#                 name="Collection:",
+#                 value=col_name
+#             )
+#             paper_embed.add_field(
+#                 name="Price:",
+#                 value=price
+#             )
+#             paper_embed.add_field(
+#                 name=f"\u200b",
+#                 value=f"[BUY NOW]({url})"
+#             )
 
-        await bot.rest.create_message(996588760860991518, content=paper_embed)
+#         await bot.rest.create_message(996588760860991518, content=paper_embed)
 
 
 @bot.command

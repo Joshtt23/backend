@@ -9,7 +9,7 @@ from tf_backend.discord_bot.extensions.col_stats import ColStats
 from tf_backend.discord_bot.extensions.tweet_tracker import GetMentions, GetName, GetUserId, SearchTweets
 from tf_backend.discord_bot.extensions.wallet_tracker import TokenTracker
 from tf_backend.discord_bot.extensions.wallets import create_account, fund_account, get_balance, send_sol
-from tf_backend.discord_bot.extensions.pph_tracker import Paper_Tracker
+# from tf_backend.discord_bot.extensions.pph_tracker import Paper_Tracker
 from lightbulb.ext import tasks
 
 

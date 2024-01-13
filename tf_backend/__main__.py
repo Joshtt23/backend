@@ -26,4 +26,4 @@ if __name__ == "__main__":
     loop.create_task(serve(app, config,
                            shutdown_trigger=busyloop,
                            ))
-    bot.run()
+    # bot.run()

@@ -1,4 +1,3 @@
-from unicodedata import name
 import hikari
 import lightbulb
 import os
@@ -199,7 +198,7 @@ async def stats(ctx):
     col = col.lower()
 
     # collection_data = ColStats(col)
-    col= None
+    collection_data = None
 
     url = "https://magiceden.io/marketplace/" + col
     col = col.replace("_", " ")
@@ -212,42 +211,40 @@ async def stats(ctx):
     )
     stats_embed.set_footer(f"Toast or DIE")
 
-
     if "detail" in collection_data:
         stats_embed.add_field(
-                            name="**Error**",
-                            value="No Collection Found.",
-                            inline=True
-                        )
+            name="**Error**",
+            value="No Collection Found.",
+            inline=True
+        )
 
         return stats_embed
     else:
-    
+
         col_stats = collection_data["collection"]
         col_img = col_stats["image"]
-        
+
         morph = col_stats["stats"]
 
-        
         sales_data = morph["sales"]
         total_sales = sales_data["total"]
         tot_vol = total_sales["volume"]/1000000000
-        one_day_sales= sales_data["1d"]
+        one_day_sales = sales_data["1d"]
         one_day_vol = one_day_sales["volume"]/1000000000
-        seven_day_sales= sales_data["7d"]
-        seven_day_vol=seven_day_sales["volume"]/1000000000
-        thirty_day_sales= sales_data["30d"]
-        thirty_day_vol=thirty_day_sales["volume"]/1000000000
-        prev_one_day_sales= sales_data["prev_1d"]
-        prev_one_day_vol=prev_one_day_sales["volume"]/1000000000
-        prev_seven_day_sales= sales_data["prev_7d"]
-        prev_seven_day_vol=prev_seven_day_sales["volume"]/1000000000
-        prev_thirty_day_sales= sales_data["prev_30d"]
-        prev_thirty_day_vol=prev_thirty_day_sales["volume"]/1000000000
+        seven_day_sales = sales_data["7d"]
+        seven_day_vol = seven_day_sales["volume"]/1000000000
+        thirty_day_sales = sales_data["30d"]
+        thirty_day_vol = thirty_day_sales["volume"]/1000000000
+        prev_one_day_sales = sales_data["prev_1d"]
+        prev_one_day_vol = prev_one_day_sales["volume"]/1000000000
+        prev_seven_day_sales = sales_data["prev_7d"]
+        prev_seven_day_vol = prev_seven_day_sales["volume"]/1000000000
+        prev_thirty_day_sales = sales_data["prev_30d"]
+        prev_thirty_day_vol = prev_thirty_day_sales["volume"]/1000000000
 
         stats_embed.set_thumbnail(
             col_img
-            )
+        )
 
         try:
             fp = col_stats["floor_price"]/1000000000
@@ -255,10 +252,10 @@ async def stats(ctx):
             fp = "NULL"
         else:
             stats_embed.add_field(
-                            name="**Floor Price:**",
-                            value="`"+str(fp)+"`",
-                            inline=True
-                        )
+                name="**Floor Price:**",
+                value="`"+str(fp)+"`",
+                inline=True
+            )
         try:
             tot_vol = col_stats["volume"]/1000000000
         except:
@@ -269,24 +266,23 @@ async def stats(ctx):
                 value="`"+str(round(tot_vol, 2))+"`",
                 inline=True
             )
-        try:   
+        try:
             listed_cnt = col_stats["listed_count"]
         except:
             listed_cnt = "NULL"
         else:
             stats_embed.add_field(
-            name="**Listed:**",
-            value="`"+str(listed_cnt)+"`",
-            inline=True
-        )
-
+                name="**Listed:**",
+                value="`"+str(listed_cnt)+"`",
+                inline=True
+            )
 
         stats_embed.add_field(
             name="**Vol 1D:**",
             value="`"+str(round(one_day_vol, 2))+"`",
             inline=True
         )
-        
+
         stats_embed.add_field(
             name="**Vol 7D:**",
             value="`"+str(round(seven_day_vol, 2))+"`",
@@ -298,7 +294,7 @@ async def stats(ctx):
             value="`"+str(round(thirty_day_vol, 2))+"`",
             inline=True
         )
-        
+
         stats_embed.add_field(
             name="**Vol Prev 1D:**",
             value="`"+str(round(prev_one_day_vol, 2))+"`",
@@ -307,13 +303,13 @@ async def stats(ctx):
 
         stats_embed.add_field(
             name="**Vol Prev 7D:**",
-            value="`" +str(round(prev_seven_day_vol, 2))+"`",
+            value="`" + str(round(prev_seven_day_vol, 2))+"`",
             inline=True
         )
-        
+
         stats_embed.add_field(
             name="**Vol Prev 30D:**",
-            value="`" +str(round(prev_thirty_day_vol, 2))+"`",
+            value="`" + str(round(prev_thirty_day_vol, 2))+"`",
             inline=True
         )
     # resp = await HistStats(col, resp)
@@ -358,10 +354,10 @@ async def roleadder(ctx):
         bot.rest.build_action_row()
 
         .add_button(hikari.ButtonStyle.SUCCESS, (f"add{roleparse}"))
-            .set_label(f"{label}")
-            .add_to_container()
+        .set_label(f"{label}")
+        .add_to_container()
     )
-    await bot.rest.create_message(callChannel, content=verifyEmbed,component= actRow )
+    await bot.rest.create_message(callChannel, content=verifyEmbed, component=actRow)
     await ctx.respond(f"Role adder successfully created for {role}")
 
 
@@ -369,26 +365,32 @@ async def roleadder(ctx):
 async def on_component_interaction(event: hikari.InteractionCreateEvent) -> None:
     if not isinstance(event.interaction, hikari.ComponentInteraction):
         return
-    role = int(event.interaction.custom_id[3:]) #returns id of role parse to number
+    # returns id of role parse to number
+    role = int(event.interaction.custom_id[3:])
     if event.interaction.custom_id == f"add{role}":
         userroles = event.interaction.member.role_ids
         if role in userroles:
-            await event.interaction.member.remove_role(role) #This is where the role needs to be imported
+            # This is where the role needs to be imported
+            await event.interaction.member.remove_role(role)
             await event.interaction.create_initial_response(
-                
-                hikari.ResponseType.MESSAGE_CREATE,  # Create a new message as response to this interaction
+
+                # Create a new message as response to this interaction
+                hikari.ResponseType.MESSAGE_CREATE,
                 "You have been removed!",  # Message content
-                flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
+                # Ephemeral message, only visible to the user who pressed the button
+                flags=hikari.MessageFlag.EPHEMERAL
             )
         else:
-            await event.interaction.member.add_role(role) #This is where the role needs to be imported
+            # This is where the role needs to be imported
+            await event.interaction.member.add_role(role)
             await event.interaction.create_initial_response(
-                
-                hikari.ResponseType.MESSAGE_CREATE,  # Create a new message as response to this interaction
-                "You have been added!",  # Message content
-                flags=hikari.MessageFlag.EPHEMERAL  # Ephemeral message, only visible to the user who pressed the button
-            )
 
+                # Create a new message as response to this interaction
+                hikari.ResponseType.MESSAGE_CREATE,
+                "You have been added!",  # Message content
+                # Ephemeral message, only visible to the user who pressed the button
+                flags=hikari.MessageFlag.EPHEMERAL
+            )
 
 
 async def AddRole(discord_id):
@@ -415,10 +417,12 @@ async def RemoveRole(discord_id):
 #     if status == "INACTIVE":
 #         await RemoveRole(discord_id)
 #         ctx.respond("No Toasty Friends Detected!")
-    
 
-def run() -> None:
+
+def run_bot() -> None:
     if os.name != 'nt':
         import uvloop
         uvloop.install()
-    bot.run()
+
+    # Return the bot start coroutine
+    return bot.start()
